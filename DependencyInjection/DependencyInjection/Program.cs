@@ -32,8 +32,12 @@ namespace DependencyInjection
 
 
             //Setter function injection
+            //PersonManager personManager = new PersonManager(person);
+            //personManager.SetPersonDataManager(personDataManager);
+
+            //Interface injection
             PersonManager personManager = new PersonManager(person);
-            personManager.SetPersonDataManager(personDataManager);
+            personManager.SetPersonDataManagerObject(personDataManager);
 
             //save the person info
             personManager.SavePerson();
@@ -82,10 +86,13 @@ namespace DependencyInjection
     }
     #endregion PersonDataManager
 
-
+    interface IPersonManagerInjector
+    {
+        void SetPersonDataManagerObject(IPersonDataManager personDataManager);
+    }
 
     //service to acting as a class to handle person manager
-    class PersonManager
+    class PersonManager : IPersonManagerInjector
     {
         private Person _person;
         private IPersonDataManager _personDataManager;
@@ -112,7 +119,18 @@ namespace DependencyInjection
         #endregion Property Injection
 
         #region SetterFunctionInjection
-        public void SetPersonDataManager(IPersonDataManager personDataManager)
+        //public void SetPersonDataManager(IPersonDataManager personDataManager)
+        //{
+        //    _personDataManager = personDataManager;
+        //}
+        //public PersonManager(Person person)
+        //{
+        //    _person = person;
+        //}
+        #endregion SetterFunctionInjection
+
+        #region InterfaceInjection
+        public void SetPersonDataManagerObject(IPersonDataManager personDataManager)
         {
             _personDataManager = personDataManager;
         }
@@ -120,7 +138,7 @@ namespace DependencyInjection
         {
             _person = person;
         }
-        #endregion SetterFunctionInjection
+        #endregion InterfaceInjection
         public void SavePerson()
         {
             _personDataManager.Save(_person);
