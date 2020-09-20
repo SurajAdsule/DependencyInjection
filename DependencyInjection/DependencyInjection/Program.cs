@@ -27,8 +27,13 @@ namespace DependencyInjection
             //PersonManager personManager = new PersonManager(person, personDataManager);
 
             //Property Injection
+            //PersonManager personManager = new PersonManager(person);
+            //personManager.PersonDataManager = personDataManager;
+
+
+            //Setter function injection
             PersonManager personManager = new PersonManager(person);
-            personManager.PersonDataManager = personDataManager;
+            personManager.SetPersonDataManager(personDataManager);
 
             //save the person info
             personManager.SavePerson();
@@ -85,23 +90,37 @@ namespace DependencyInjection
         private Person _person;
         private IPersonDataManager _personDataManager;
 
-        public IPersonDataManager PersonDataManager
-        {
-            get { return _personDataManager; }
-            set { _personDataManager = value; }
-        }
-
+        #region Constructor Injection
+        //constructor Injection
         //public PersonManager(Person person, IPersonDataManager personDataManager)
         //{
         //    _person = person;
         //    _personDataManager = personDataManager;
         //}
+        #endregion Constructor Injection
+        #region Property Injection
+        //Property Injection
+        //public IPersonDataManager PersonDataManager
+        //{
+        //    get { return _personDataManager; }
+        //    set { _personDataManager = value; }
+        //}
+        //public PersonManager(Person person)
+        //{
+        //    _person = person;
+        //}
+        #endregion Property Injection
 
+        #region SetterFunctionInjection
+        public void SetPersonDataManager(IPersonDataManager personDataManager)
+        {
+            _personDataManager = personDataManager;
+        }
         public PersonManager(Person person)
         {
             _person = person;
         }
-
+        #endregion SetterFunctionInjection
         public void SavePerson()
         {
             _personDataManager.Save(_person);
