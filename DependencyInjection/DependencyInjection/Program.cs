@@ -11,16 +11,21 @@ namespace DependencyInjection
     {
         static void Main(string[] args)
         {
+            string personDataManagerTypeString = ConfigurationManager.AppSettings["PersonDataManagerType"];
+            Type personDataManagerType = Type.GetType(string.Format("DependencyInjection.{0}", personDataManagerTypeString), true);
+            
+            IPersonDataManager personDataManager = Activator.CreateInstance(personDataManagerType) as IPersonDataManager;
+
             //create the person class
-            //save the person info
             Person person = new Person()
             {
                 FirstName = "John",
                 LastName = "Doe"
             };
 
-            IPersonDataManager personDataManager = new PersonDataManagerXmlFile();
+            //constructor Injection
             PersonManager personManager = new PersonManager(person, personDataManager);
+
             //save the person info
             personManager.SavePerson();
 
