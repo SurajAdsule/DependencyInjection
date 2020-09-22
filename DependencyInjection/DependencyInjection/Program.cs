@@ -24,7 +24,7 @@ namespace DependencyInjection
             };
 
             //constructor Injection
-            //PersonManager personManager = new PersonManager(person, personDataManager);
+            PersonManager personManager = new PersonManager(person, personDataManager);
 
             //Property Injection
             //PersonManager personManager = new PersonManager(person);
@@ -36,8 +36,8 @@ namespace DependencyInjection
             //personManager.SetPersonDataManager(personDataManager);
 
             //Interface injection
-            PersonManager personManager = new PersonManager(person);
-            personManager.SetPersonDataManagerObject(personDataManager);
+            //PersonManager personManager = new PersonManager(person);
+            //personManager.SetPersonDataManagerObject(personDataManager);
 
             //save the person info
             personManager.SavePerson();
@@ -92,18 +92,17 @@ namespace DependencyInjection
     }
 
     //service to acting as a class to handle person manager
-    class PersonManager : IPersonManagerInjector
+    class PersonManager //: IPersonManagerInjector
     {
         private Person _person;
         private IPersonDataManager _personDataManager;
 
         #region Constructor Injection
-        //constructor Injection
-        //public PersonManager(Person person, IPersonDataManager personDataManager)
-        //{
-        //    _person = person;
-        //    _personDataManager = personDataManager;
-        //}
+        public PersonManager(Person person, IPersonDataManager personDataManager)
+        {
+            _person = person;
+            _personDataManager = personDataManager;
+        }
         #endregion Constructor Injection
         #region Property Injection
         //Property Injection
@@ -130,14 +129,14 @@ namespace DependencyInjection
         #endregion SetterFunctionInjection
 
         #region InterfaceInjection
-        public void SetPersonDataManagerObject(IPersonDataManager personDataManager)
-        {
-            _personDataManager = personDataManager;
-        }
-        public PersonManager(Person person)
-        {
-            _person = person;
-        }
+        //public void SetPersonDataManagerObject(IPersonDataManager personDataManager)
+        //{
+        //    _personDataManager = personDataManager;
+        //}
+        //public PersonManager(Person person)
+        //{
+        //    _person = person;
+        //}
         #endregion InterfaceInjection
         public void SavePerson()
         {
